@@ -1,0 +1,38 @@
+﻿@page "/stream"
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Net
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
+
+<script src="scripts.js"></script>
+
+<PageTitle>Stream</PageTitle>
+
+<h3>Stream</h3>
+
+<div>
+    <label for="streamKeyInput">Stream Key:</label>
+    <InputText id="streamKeyInput" @bind-Value="@StreamKey" />
+</div>
+
+@code {
+    private string _streamKey = string.Empty;
+    public string StreamKey
+    { 
+        get => _streamKey;
+        set
+        {
+            _streamKey = value;
+            if(!string.IsNullOrEmpty(value))
+            {
+                NavigateToWatch(value);
+            }
+        }
+    }
+
+    private void NavigateToWatch(string streamKey)
+    {
+        NavManager.NavigateTo($"{NavManager.BaseUri}watch/?streamKey={WebUtility.UrlEncode(streamKey)}");
+    }
+}

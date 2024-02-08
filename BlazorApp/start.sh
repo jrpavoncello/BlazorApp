@@ -1,0 +1,1 @@
+exec /home/pi/.dotnet/dotnet BlazorApp.dll

@@ -1,0 +1,37 @@
+﻿@page "/watch"
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Net
+@rendermode InteractiveServer
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
+
+<script src="scripts.js"></script>
+
+<PageTitle>Watch</PageTitle>
+
+<h3>Watch</h3>
+
+<video id="my-video"
+       class="video-js"
+       controls
+       preload="auto"
+       width="1280"
+       height="528"
+       data-setup="{}"
+       autoplay>
+    <source src=@($"{NavManager.BaseUri.Substring(0, NavManager.BaseUri.Length - 1)}:8080/tv/{_streamKey}.mpd") type="application/dash+xml" />
+    <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+    </p>
+</video>
+
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+@code {
+    private string _streamKey => 
+        QueryHelpers
+            .ParseQuery(NavManager.ToAbsoluteUri(NavManager.Uri).Query)
+            .GetValueOrDefault("streamKey", string.Empty)!;
+}

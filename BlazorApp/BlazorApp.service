@@ -1,0 +1,13 @@
+[Unit]
+Description=BlazorApp
+
+[Service]
+WorkingDirectory=/var/www/html/BlazorApp
+ExecStart=/bin/bash ./start.sh
+Restart=always
+RestartSec=5
+SyslogIdentifier=BlazorApp
+User=pi
+
+[Install]
+WantedBy=multi-user.target
